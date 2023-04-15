@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos.jktu.cc:8848
+      discovery:
+        server-addr: nacos.jktu.cc:8848
+  config:
+    import:
+      - nacos:gateway-service.yml
+      - nacos:redis-session.yml
+      - nacos:sa-token.yml
+  devtools:
+    livereload:
+      port: 10000

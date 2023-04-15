@@ -1,0 +1,70 @@
+name: Build & Push Docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Get repository name
+        run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+      - name: Build and push Docker image for backend-blog
+        uses: docker/build-push-action@v4
+        with:
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-blog:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-blog:latest
+          target: backend-blog
+      - name: Build and push Docker image for backend-auth
+        uses: docker/build-push-action@v4
+        with:
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-auth:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-auth:latest
+          target: backend-auth
+      - name: Build and push Docker image for backend-bot
+        uses: docker/build-push-action@v4
+        with:
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-bot:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-bot:latest
+          target: backend-bot
+      - name: Build and push Docker image for backend-comment
+        uses: docker/build-push-action@v4
+        with:
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-comment:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-comment:latest
+          target: backend-comment
+      - name: Build and push Docker image for backend-gateway
+        uses: docker/build-push-action@v4
+        with:
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-gateway:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-gateway:latest
+          target: backend-gateway

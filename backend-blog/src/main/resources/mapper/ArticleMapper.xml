@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.jktu.apps.blog.dao.mapper.ArticleMapper">
+    <sql id="selectArticles">
+        SELECT a.id          AS a_id,
+               a.create_time AS a_create_time,
+               a.update_time AS a_update_time,
+               title,
+               content,
+               user_id,
+               t.name        AS t_name
+        FROM article a
+                 LEFT JOIN article_tag_rel atr ON a.id = atr.article_id
+                 LEFT JOIN tag t ON atr.tag_id = t.id
+    </sql>
+    <select id="getArticlesPageInUserIds" resultMap="articleResultMap">
+        <include refid="selectArticles"/>
+        WHERE a.user_id IN
+        <foreach collection="userIds" item="userId" open="(" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </select>
+    <select id="getArticlesPage" resultMap="articleResultMap">
+        <include refid="selectArticles"/>
+    </select>
+    <resultMap id="articleResultMap" type="cc.jktu.apps.blog.dao.entity.ArticleEntity">
+        <id column="a_id" property="id"/>
+        <result column="a_create_time" property="createTime"/>
+        <result column="a_update_time" property="updateTime"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="user_id" property="userId"/>
+        <collection property="tags" ofType="cc.jktu.apps.blog.dao.entity.TagEntity">
+            <result column="t_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="getArticleInIds" resultMap="articleResultMap">
+        <include refid="selectArticles"/>
+        WHERE a.id IN
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

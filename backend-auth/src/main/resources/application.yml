@@ -1,0 +1,21 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: auth-service
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos.jktu.cc:8848
+      discovery:
+        server-addr: nacos.jktu.cc:8848
+  config:
+    import:
+      - nacos:auth-service.yml
+      - nacos:mybatis-plus.yml
+      - nacos:redis-session.yml
+      - nacos:spring-mvc.yml
+      - nacos:sa-token.yml
+  devtools:
+    livereload:
+      port: 10001

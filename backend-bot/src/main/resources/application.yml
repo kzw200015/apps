@@ -1,0 +1,20 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: bot-service
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos.jktu.cc:8848
+      discovery:
+        server-addr: nacos.jktu.cc:8848
+  config:
+    import:
+      - nacos:bot-service.yml
+      - nacos:mybatis-plus.yml
+      - nacos:spring-mvc.yml
+  devtools:
+    livereload:
+      port: 10004
