@@ -23,6 +23,7 @@ public class BotConfig {
 
     private Long qq;
     private String password;
+    private BotConfiguration.MiraiProtocol protocol;
 
     @Bean
     public Bot bot() {
