@@ -28,7 +28,7 @@ public class BotConfig {
     @Bean
     public Bot bot() {
         final BotConfiguration botConfiguration = new BotConfiguration();
-        botConfiguration.setProtocol(BotConfiguration.MiraiProtocol.ANDROID_WATCH);
+        botConfiguration.setProtocol(protocol);
         botConfiguration.fileBasedDeviceInfo();
         botConfiguration.setWorkingDir(new File("bot-data"));
 
