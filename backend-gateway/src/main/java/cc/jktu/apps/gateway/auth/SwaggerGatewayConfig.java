@@ -12,7 +12,7 @@ import java.util.List;
 @Primary
 @Configuration
 @RequiredArgsConstructor
-public class SwaggerConfig implements SwaggerResourcesProvider {
+public class SwaggerGatewayConfig implements SwaggerResourcesProvider {
 
     private final GatewayProperties gatewayProperties;
 
