@@ -9,6 +9,7 @@ import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.auth.BotAuthorization;
 import net.mamoe.mirai.utils.BotConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -19,6 +20,7 @@ import java.io.File;
 @Import({MybatisPlusConfig.class, TimeMetaObjectHandler.class, SwaggerConfig.class})
 @ConfigurationProperties("bot")
 @Data
+@RefreshScope
 public class BotConfig {
 
     private Long qq;
