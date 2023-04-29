@@ -8,7 +8,7 @@ import cc.jktu.apps.blog.dao.mapper.ArticleMapper;
 import cc.jktu.apps.blog.dao.mapper.ArticleTagRelMapper;
 import cc.jktu.apps.blog.dao.mapper.TagMapper;
 import cc.jktu.apps.blog.service.rpc.AuthUserRpcService;
-import cc.jktu.apps.common.PageWrapper;
+import cc.jktu.apps.common.CommonPage;
 import cc.jktu.apps.common.exception.BadRequestException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,27 +23,30 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticleMapper articleMapper;
+
     private final AuthUserRpcService authUserRpcService;
+
     private final TagMapper tagMapper;
+
     private final ArticleTagRelMapper articleTagRelMapper;
 
-    public PageWrapper<ArticleEntity> getArticlesPageInUserIds(List<Long> userIds, Long pageNum, Long pageSize) {
+    public CommonPage<ArticleEntity> getArticlesPageInUserIds(List<Long> userIds, Long pageNum, Long pageSize) {
         if (userIds.isEmpty()) {
             throw new BadRequestException("用户ID不能为空");
         }
-        final PageWrapper<ArticleEntity> pageWrapper = PageWrapper.of(articleMapper.getArticlesPageInUserIds(new Page<>(pageNum, pageSize), userIds));
-        pageWrapper.items().forEach(it -> it.setUser(authUserRpcService.getById(it.getUserId()).data()));
-        return pageWrapper;
+        final CommonPage<ArticleEntity> commonPage = CommonPage.of(articleMapper.getArticlesPageInUserIds(new Page<>(pageNum, pageSize), userIds));
+        commonPage.items().forEach(it -> it.setUser(authUserRpcService.getById(it.getUserId()).data()));
+        return commonPage;
     }
 
-    public PageWrapper<ArticleEntity> getArticlesPageByUserId(Long userId, Long pageNum, Long pageSize) {
+    public CommonPage<ArticleEntity> getArticlesPageByUserId(Long userId, Long pageNum, Long pageSize) {
         return getArticlesPageInUserIds(List.of(userId), pageNum, pageSize);
     }
 
-    public PageWrapper<ArticleEntity> getArticlesPage(Long pageNum, Long pageSize) {
-        final PageWrapper<ArticleEntity> pageWrapper = PageWrapper.of(articleMapper.getArticlesPage(new Page<>(pageNum, pageSize)));
-        pageWrapper.items().parallelStream().forEach(it -> it.setUser(authUserRpcService.getById(it.getUserId()).data()));
-        return pageWrapper;
+    public CommonPage<ArticleEntity> getArticlesPage(Long pageNum, Long pageSize) {
+        final CommonPage<ArticleEntity> commonPage = CommonPage.of(articleMapper.getArticlesPage(new Page<>(pageNum, pageSize)));
+        commonPage.items().parallelStream().forEach(it -> it.setUser(authUserRpcService.getById(it.getUserId()).data()));
+        return commonPage;
     }
 
     public List<ArticleEntity> getArticleInIds(List<Long> ids) {
@@ -72,7 +75,7 @@ public class ArticleService {
     }
 
     @Transactional
-    protected void updateArticleTagRel(Long articleId, List<String> tagNames) {
+    public void updateArticleTagRel(Long articleId, List<String> tagNames) {
         articleTagRelMapper.delete(new LambdaQueryWrapper<ArticleTagRelEntity>().eq(ArticleTagRelEntity::getArticleId, articleId));
         tagNames.forEach(tagName -> {
             final TagEntity tag = tagMapper.selectOne(new LambdaQueryWrapper<TagEntity>().eq(TagEntity::getName, tagName));
@@ -93,11 +96,11 @@ public class ArticleService {
         });
     }
 
-    public void removeArticleById(final String id) {
+    public void removeArticleById(String id) {
         articleMapper.deleteById(id);
     }
 
-    public void removeArticlesByUserId(final String userId) {
+    public void removeArticlesByUserId(String userId) {
         articleMapper.delete(new LambdaQueryWrapper<ArticleEntity>()
                 .eq(ArticleEntity::getUserId, userId));
     }

@@ -4,7 +4,7 @@ import cc.jktu.apps.blog.controller.req.ArticleAddReq;
 import cc.jktu.apps.blog.dao.entity.ArticleEntity;
 import cc.jktu.apps.blog.service.ArticleService;
 import cc.jktu.apps.common.CommonResp;
-import cc.jktu.apps.common.PageWrapper;
+import cc.jktu.apps.common.CommonPage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ public class ArticleController {
 
     @ApiOperation("分页获取文章")
     @GetMapping("")
-    public CommonResp<PageWrapper<ArticleEntity>> getArticlesPage(@RequestParam(required = false) List<Long> userIds,
-                                                                  @RequestParam Long pageNum,
-                                                                  @RequestParam Long pageSize) {
+    public CommonResp<CommonPage<ArticleEntity>> getArticlesPage(@RequestParam(required = false) List<Long> userIds,
+                                                                 @RequestParam Long pageNum,
+                                                                 @RequestParam Long pageSize) {
         if (userIds != null && !userIds.isEmpty()) {
             return CommonResp.ok(articleService.getArticlesPageInUserIds(userIds, pageNum, pageSize));
         }
