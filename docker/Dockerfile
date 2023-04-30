@@ -7,9 +7,9 @@ COPY . /build
 RUN mvn --batch-mode --update-snapshots package
 
 
-FROM eclipse-temurin:17-jre-alpine as backend-blog
+FROM eclipse-temurin:17-jre-alpine as backend-note
 
-COPY --from=builder /build/backend-blog/target/backend-blog-*.jar app.jar
+COPY --from=builder /build/backend-note/target/backend-note-*.jar app.jar
 
 ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
 

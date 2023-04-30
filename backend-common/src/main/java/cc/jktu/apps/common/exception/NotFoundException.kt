@@ -1,13 +1,7 @@
-package cc.jktu.apps.common.exception;
+package cc.jktu.apps.common.exception
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ResponseStatus
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends RuntimeException {
-
-    public NotFoundException(final String message) {
-        super(message);
-    }
-
-}
+class NotFoundException(message: String?) : RuntimeException(message)

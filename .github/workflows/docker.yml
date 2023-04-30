@@ -23,15 +23,15 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Get repository name
         run: echo "REPO_NAME=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-      - name: Build and push Docker image for backend-blog
+      - name: Build and push Docker image for backend-note
         uses: docker/build-push-action@v4
         with:
           file: docker/Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-blog:${{ github.sha }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-blog:latest
-          target: backend-blog
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-note:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-note:latest
+          target: backend-note
       - name: Build and push Docker image for backend-auth
         uses: docker/build-push-action@v4
         with:

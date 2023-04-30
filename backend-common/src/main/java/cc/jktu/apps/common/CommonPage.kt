@@ -1,14 +1,9 @@
-package cc.jktu.apps.common;
+package cc.jktu.apps.common
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
+data class CommonPage<T>(val pageNum: Long, val pageSize: Long, val count: Long, val items: List<T>)
 
-import java.util.List;
-
-public record CommonPage<T>(Long pageNum, Long pageSize, Long count, List<T> items) {
-
-    public static <T> CommonPage<T> of(IPage<T> page) {
-        return new CommonPage<>(page.getCurrent(), page.getSize(), page.getTotal(), page.getRecords());
-    }
-
+fun <T> Page<T>.toCommonPage(): CommonPage<T> {
+    return CommonPage(current, size, total, records)
 }
