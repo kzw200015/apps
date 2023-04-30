@@ -6,6 +6,9 @@
     </list>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -16,6 +19,8 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/backend-blog/pom.xml" />
+        <option value="$PROJECT_DIR$/backend-bot/pom.xml" />
+        <option value="$PROJECT_DIR$/backend-comment/pom.xml" />
       </set>
     </option>
   </component>

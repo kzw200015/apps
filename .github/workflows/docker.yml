@@ -50,15 +50,6 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-bot:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-bot:latest
           target: backend-bot
-      - name: Build and push Docker image for backend-comment
-        uses: docker/build-push-action@v4
-        with:
-          file: docker/Dockerfile
-          push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-comment:${{ github.sha }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-comment:latest
-          target: backend-comment
       - name: Build and push Docker image for backend-gateway
         uses: docker/build-push-action@v4
         with:

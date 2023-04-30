@@ -1,42 +1,35 @@
-FROM maven:3-eclipse-temurin-17-alpine as builder
+FROM gradle:8-jdk17-alpine as builder
 
 WORKDIR /build
 
 COPY . /build
 
-RUN mvn --batch-mode --update-snapshots package
+RUN gradle build
 
 
 FROM eclipse-temurin:17-jre-alpine as backend-note
 
-COPY --from=builder /build/backend-note/target/backend-note-*.jar app.jar
+COPY --from=builder /build/backend-note/build/libs/backend-note-[0-9].[0-9].[0-9].jar app.jar
 
 ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
 
 
 FROM eclipse-temurin:17-jre-alpine as backend-auth
 
-COPY --from=builder /build/backend-auth/target/backend-auth-*.jar app.jar
+COPY --from=builder /build/backend-auth/build/libs/backend-auth-[0-9].[0-9].[0-9].jar app.jar
 
 ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
 
 
 FROM eclipse-temurin:17-jre-alpine as backend-bot
 
-COPY --from=builder /build/backend-bot/target/backend-bot-*.jar app.jar
-
-ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
-
-
-FROM eclipse-temurin:17-jre-alpine as backend-comment
-
-COPY --from=builder /build/backend-comment/target/backend-comment-*.jar app.jar
+COPY --from=builder /build/backend-bot/build/libs/backend-bot-[0-9].[0-9].[0-9].jar app.jar
 
 ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
 
 
 FROM eclipse-temurin:17-jre-alpine as backend-gateway
 
-COPY --from=builder /build/backend-gateway/target/backend-gateway-*.jar app.jar
+COPY --from=builder /build/backend-gateway/build/libs/backend-gateway-[0-9].[0-9].[0-9].jar app.jar
 
 ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
