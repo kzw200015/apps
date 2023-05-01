@@ -11,6 +11,7 @@ spring:
         server-addr: nacos.jktu.cc:8848
   config:
     import:
+      - nacos:server.yml
       - nacos:auth-service.yml
       - nacos:mybatis-plus.yml
       - nacos:redis-session.yml

@@ -12,6 +12,7 @@ spring:
         server-addr: nacos.jktu.cc:8848
   config:
     import:
+      - nacos:server.yml
       - nacos:note-service.yml
       - nacos:mybatis-plus.yml
       - nacos:spring-mvc.yml

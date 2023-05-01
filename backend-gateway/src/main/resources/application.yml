@@ -12,6 +12,7 @@ spring:
         server-addr: nacos.jktu.cc:8848
   config:
     import:
+      - nacos:server.yml
       - nacos:gateway-service.yml
       - nacos:redis-session.yml
       - nacos:sa-token.yml
