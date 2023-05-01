@@ -1,7 +1,7 @@
 package cc.jktu.apps.bot.config
 
 import cc.jktu.apps.common.config.MybatisPlusConfig
-import cc.jktu.apps.common.config.SwaggerConfig
+import cc.jktu.apps.common.config.OpenApiConfig
 import cc.jktu.apps.common.config.TimeMetaObjectHandler
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.BotFactory.INSTANCE.newBot
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import
 import java.io.File
 
 @Configuration
-@Import(MybatisPlusConfig::class, TimeMetaObjectHandler::class, SwaggerConfig::class)
+@Import(MybatisPlusConfig::class, TimeMetaObjectHandler::class, OpenApiConfig::class)
 @ConfigurationPropertiesScan
 class AppConfig {
 

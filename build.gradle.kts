@@ -62,8 +62,11 @@ subprojects {
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-reflect")
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+        implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
         compileOnly("org.projectlombok:lombok")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
+        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
         kapt("org.springframework.boot:spring-boot-configuration-processor")
         developmentOnly("org.springframework.boot:spring-boot-devtools")
     }
@@ -79,10 +82,6 @@ subprojects {
         useJUnitPlatform()
     }
 
-}
-
-tasks.withType<Jar> {
-    enabled = false
 }
 
 tasks.withType<BootJar> {
