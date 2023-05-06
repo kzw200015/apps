@@ -3,10 +3,10 @@ package cc.jktu.apps.auth.controller
 import cc.jktu.apps.auth.controller.req.LoginReq
 import cc.jktu.apps.auth.controller.req.UserAddOrUpdateReq
 import cc.jktu.apps.auth.service.UserService
-import cc.jktu.apps.common.CommonResp
-import cc.jktu.apps.common.emptyRespWithMsg
+import cc.jktu.apps.common.util.CommonResp
+import cc.jktu.apps.common.util.emptyRespWithMsg
 import cc.jktu.apps.common.exception.BadRequestException
-import cc.jktu.apps.common.util.BcryptUtil
+import cc.jktu.apps.common.util.checkPassword
 import cn.dev33.satoken.stp.StpUtil
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -28,7 +28,7 @@ class AuthController(
         val username = req.username
         val password = req.password
         val user = userService.getByUsername(username)
-        val ret = BcryptUtil.checkPassword(password, user.password ?: "")
+        val ret = checkPassword(password, user.password ?: "")
         if (!ret) {
             throw BadRequestException("密码错误")
         }
@@ -39,7 +39,7 @@ class AuthController(
     @Operation(summary = "注册")
     @PostMapping("/register")
     fun addOne(@RequestBody req: UserAddOrUpdateReq): CommonResp<Nothing?> {
-        userService.addOne(req.username, req.password)
+        userService.createUser(req.username, req.password)
         return emptyRespWithMsg("注册成功")
     }
 }

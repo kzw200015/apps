@@ -11,6 +11,6 @@ dependencies {
     implementation("org.springframework:spring-context-support")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-api")
     implementation("org.mindrot:jbcrypt")
-    implementation(project(":backend-common"))
+    implementation(project(":backend-core"))
     runtimeOnly("com.mysql:mysql-connector-j")
 }

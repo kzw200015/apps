@@ -15,7 +15,9 @@ spring:
       - nacos:server.yml
       - nacos:note-service.yml
       - nacos:mybatis-plus.yml
+      - nacos:redis-session.yml
       - nacos:spring-mvc.yml
+      - nacos:sa-token.yml
   devtools:
     livereload:
       port: 10002

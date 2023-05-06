@@ -18,6 +18,6 @@ object MessageHandler : SimpleListenerHost() {
 
     @EventHandler
     suspend fun MessageEvent.handle() {
-        subject.sendMessage("as")
+
     }
 }

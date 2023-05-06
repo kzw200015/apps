@@ -8,5 +8,5 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework:spring-context-support")
     implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
-    implementation(project(":backend-common"))
+    implementation(project(":backend-core"))
 }

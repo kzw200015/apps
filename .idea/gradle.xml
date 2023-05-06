@@ -10,7 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/backend-auth" />
             <option value="$PROJECT_DIR$/backend-bot" />
-            <option value="$PROJECT_DIR$/backend-common" />
+            <option value="$PROJECT_DIR$/backend-core" />
             <option value="$PROJECT_DIR$/backend-gateway" />
             <option value="$PROJECT_DIR$/backend-note" />
           </set>

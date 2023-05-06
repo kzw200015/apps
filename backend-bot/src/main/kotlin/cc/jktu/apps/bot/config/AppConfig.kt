@@ -1,5 +1,6 @@
 package cc.jktu.apps.bot.config
 
+import cc.jktu.apps.common.util.CustomErrorAttributes
 import cc.jktu.apps.common.config.MybatisPlusConfig
 import cc.jktu.apps.common.config.OpenApiConfig
 import cc.jktu.apps.common.config.TimeMetaObjectHandler
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Import
 import java.io.File
 
 @Configuration
-@Import(MybatisPlusConfig::class, TimeMetaObjectHandler::class, OpenApiConfig::class)
+@Import(MybatisPlusConfig::class, TimeMetaObjectHandler::class, OpenApiConfig::class, CustomErrorAttributes::class)
 @ConfigurationPropertiesScan
 class AppConfig {
 

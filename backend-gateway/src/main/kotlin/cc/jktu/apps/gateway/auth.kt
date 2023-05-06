@@ -1,14 +1,13 @@
 package cc.jktu.apps.gateway
 
-import cc.jktu.apps.common.CommonResp
-import cc.jktu.apps.common.util.toJsonString
+import cc.jktu.apps.common.exception.wrapAndThrow
+import cn.dev33.satoken.exception.SaTokenException
 import cn.dev33.satoken.reactor.filter.SaReactorFilter
 import cn.dev33.satoken.router.SaRouter
 import cn.dev33.satoken.stp.StpInterface
 import cn.dev33.satoken.stp.StpUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 
 @Component
@@ -30,17 +29,21 @@ class SaTokenConfig {
     fun saReactorFilter(): SaReactorFilter {
         return SaReactorFilter()
             .addInclude("/**")
-            .addExclude("/auth/login")
-            .addExclude("/auth/register")
-            .addExclude("/swagger-ui/**")
+            .addExclude("/auth-service/login")
+            .addExclude("/auth-service/register")
             .addExclude("/swagger-ui.html")
             .addExclude("/webjars/**")
-            .addExclude("/v3/**")
-            .addExclude("/swagger-resources/**")
             .addExclude("/*/v3/api-docs")
+            .addExclude("/v3/api-docs/*")
             .setAuth {
-                SaRouter.match("/**", StpUtil::checkLogin)
+                SaRouter.match("/**") { _ ->
+                    StpUtil.checkLogin()
+                }
             }
-            .setError { CommonResp.of(HttpStatus.BAD_REQUEST, null, it.message).toJsonString() }
+            .setError {
+                if (it is SaTokenException) {
+                    it.wrapAndThrow()
+                }
+            }
     }
 }

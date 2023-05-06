@@ -1,4 +1,6 @@
 dependencies {
+    implementation("cn.dev33:sa-token-spring-boot3-starter")
+    implementation("cn.dev33:sa-token-dao-redis-jackson")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.baomidou:mybatis-plus-boot-starter")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery")
@@ -8,6 +10,6 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springframework:spring-context-support")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-api")
-    implementation(project(":backend-common"))
+    implementation(project(":backend-core"))
     runtimeOnly("com.mysql:mysql-connector-j")
 }
