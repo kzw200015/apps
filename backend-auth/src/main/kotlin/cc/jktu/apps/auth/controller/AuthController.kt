@@ -3,10 +3,11 @@ package cc.jktu.apps.auth.controller
 import cc.jktu.apps.auth.controller.req.LoginReq
 import cc.jktu.apps.auth.controller.req.UserAddOrUpdateReq
 import cc.jktu.apps.auth.service.UserService
-import cc.jktu.apps.common.util.CommonResp
-import cc.jktu.apps.common.util.emptyRespWithMsg
 import cc.jktu.apps.common.exception.BadRequestException
+import cc.jktu.apps.common.util.CommonResp
 import cc.jktu.apps.common.util.checkPassword
+import cc.jktu.apps.common.util.emptyRespWithMsg
+import cc.jktu.apps.common.util.ok
 import cn.dev33.satoken.stp.StpUtil
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -24,7 +25,7 @@ class AuthController(
 
     @Operation(summary = "登录")
     @PostMapping("/login")
-    fun login(@RequestBody req: LoginReq): CommonResp<Nothing?> {
+    fun login(@RequestBody req: LoginReq): CommonResp<TokenInfo> {
         val username = req.username
         val password = req.password
         val user = userService.getByUsername(username)
@@ -33,7 +34,8 @@ class AuthController(
             throw BadRequestException("密码错误")
         }
         StpUtil.login(user.id)
-        return emptyRespWithMsg("登陆成功")
+        val tokenInfo = StpUtil.getTokenInfo()
+        return TokenInfo(tokenInfo.tokenName, tokenInfo.tokenValue).ok()
     }
 
     @Operation(summary = "注册")
@@ -43,3 +45,5 @@ class AuthController(
         return emptyRespWithMsg("注册成功")
     }
 }
+
+data class TokenInfo(val tokenName: String, val tokenValue: String)

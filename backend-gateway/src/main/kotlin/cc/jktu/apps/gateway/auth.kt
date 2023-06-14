@@ -8,6 +8,8 @@ import cn.dev33.satoken.stp.StpInterface
 import cn.dev33.satoken.stp.StpUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.annotation.Order
+import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 
 @Component
@@ -26,6 +28,7 @@ class StpInterfaceImpl : StpInterface {
 class SaTokenConfig {
 
     @Bean
+    @Order(999)
     fun saReactorFilter(): SaReactorFilter {
         return SaReactorFilter()
             .addInclude("/**")
@@ -36,8 +39,10 @@ class SaTokenConfig {
             .addExclude("/*/v3/api-docs")
             .addExclude("/v3/api-docs/*")
             .setAuth {
-                SaRouter.match("/**") { _ ->
-                    StpUtil.checkLogin()
+                SaRouter.match("/**") { obj ->
+                    obj.notMatchMethod(HttpMethod.OPTIONS.name()).check { _ ->
+                        StpUtil.checkLogin()
+                    }
                 }
             }
             .setError {

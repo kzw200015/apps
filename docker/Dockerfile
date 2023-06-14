@@ -7,13 +7,6 @@ COPY . /build
 RUN gradle build
 
 
-FROM ibm-semeru-runtimes:open-17-jre as backend-note
-
-COPY --from=builder /build/backend-note/build/libs/backend-note-[0-9].[0-9].[0-9].jar app.jar
-
-ENTRYPOINT ["java","--add-opens=java.base/java.lang.invoke=ALL-UNNAMED","-jar","/app.jar"]
-
-
 FROM ibm-semeru-runtimes:open-17-jre as backend-auth
 
 COPY --from=builder /build/backend-auth/build/libs/backend-auth-[0-9].[0-9].[0-9].jar app.jar
