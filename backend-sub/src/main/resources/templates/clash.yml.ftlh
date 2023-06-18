@@ -6,6 +6,7 @@ log-level: info
 external-controller: :9090
 
 dns:
+  enable: true
   default-nameserver:
     - 223.5.5.5
     - 114.114.114.114
