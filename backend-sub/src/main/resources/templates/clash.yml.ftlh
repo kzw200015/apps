@@ -4,12 +4,22 @@ allow-lan: true
 mode: rule
 log-level: info
 external-controller: :9090
+
+dns:
+  default-nameserver:
+    - 223.5.5.5
+    - 114.114.114.114
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+
 proxy-providers:
   ${name}:
     type: http
     url: <#noautoesc>${url}</#noautoesc>
     interval: 86400
-    path: ./proxy-providers/跑路云.yaml
+    path: ./proxy-providers/${name}.yaml
+
 proxy-groups:
   - name: 节点选择
     type: select
@@ -29,6 +39,7 @@ proxy-groups:
     type: select
     proxies:
       - REJECT
+
 rules:
   - RULE-SET,LocalAreaNetwork,全球直连
   - DOMAIN-SUFFIX,skytech.io,全球直连
@@ -38,6 +49,7 @@ rules:
   - RULE-SET,ProxyLite,节点选择
   - GEOIP,CN,全球直连
   - MATCH,漏网之鱼
+
 rule-providers:
   LocalAreaNetwork:
     type: http
