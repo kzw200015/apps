@@ -5,17 +5,17 @@ mode: rule
 log-level: info
 external-controller: :9090
 proxy-providers:
-  跑路云:
+  ${name}:
     type: http
-    url: ${url}
+    url: <#noautoesc>${url}</#noautoesc>
     interval: 86400
     path: ./proxy-providers/跑路云.yaml
 proxy-groups:
   - name: 节点选择
     type: select
-    filter: ${filter}
+    filter: <#noautoesc>${filter}</#noautoesc>
     use:
-      - 跑路云
+      - ${name}
   - name: 漏网之鱼
     type: select
     proxies:

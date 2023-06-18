@@ -21,15 +21,28 @@ class SubController(
 ) {
     @GetMapping("", produces = [MediaType.TEXT_PLAIN_VALUE])
     @Operation
-    fun clash(@RequestParam target: Target, @RequestParam url: String, filter: String, model: Model): String {
+    fun clash(
+        @RequestParam target: Target,
+        @RequestParam name: String,
+        @RequestParam url: String,
+        filter: String,
+        model: Model
+    ): String {
         val uri = UriComponentsBuilder.fromUriString(subConfig.apiUrl).path("/sub")
-            .queryParam("target", "clash")
+            .queryParam("target", target.name.lowercase())
             .queryParam("url", URLEncoder.encode(url, Charsets.UTF_8))
             .queryParam("udp", "true")
             .queryParam("list", "true")
-            .toUriString()
-        model.addAttribute("url", uri)
-        model.addAttribute("filter", filter)
+            .build()
+            .toString()
+
+        model.addAllAttributes(
+            mapOf(
+                "name" to name,
+                "url" to uri,
+                "filter" to filter
+            )
+        )
         return when (target) {
             Target.Clash -> "clash.yml"
             Target.Loon -> "loon.conf"
