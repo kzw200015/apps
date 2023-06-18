@@ -38,6 +38,7 @@ class SaTokenConfig {
             .addExclude("/webjars/**")
             .addExclude("/*/v3/api-docs")
             .addExclude("/v3/api-docs/*")
+            .addExclude("/sub-service/sub")
             .setAuth {
                 SaRouter.match("/**") { obj ->
                     obj.notMatchMethod(HttpMethod.OPTIONS.name()).check { _ ->

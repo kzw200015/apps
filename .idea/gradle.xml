@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/backend-bot" />
             <option value="$PROJECT_DIR$/backend-core" />
             <option value="$PROJECT_DIR$/backend-gateway" />
+            <option value="$PROJECT_DIR$/backend-sub" />
           </set>
         </option>
       </GradleProjectSettings>

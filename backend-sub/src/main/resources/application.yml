@@ -1,0 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: sub-service
+  cloud:
+    nacos:
+      config:
+        server-addr: nacos.jktu.cc:8848
+      discovery:
+        server-addr: nacos.jktu.cc:8848
+  config:
+    import:
+      - nacos:server.yml
+      - nacos:sub-service.yml
+      - nacos:spring-mvc.yml
+  devtools:
+    livereload:
+      port: 10002
+

@@ -50,3 +50,12 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-gateway:${{ github.sha }}
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-gateway:latest
           target: backend-gateway
+      - name: Build and push Docker image for backend-sub
+        uses: docker/build-push-action@v4
+        with:
+          file: docker/Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-sub:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.REPO_NAME }}-backend-sub:latest
+          target: backend-sub
