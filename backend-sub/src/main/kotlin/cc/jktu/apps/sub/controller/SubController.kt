@@ -3,6 +3,7 @@ package cc.jktu.apps.sub.controller
 import cc.jktu.apps.sub.config.SubConfig
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -25,7 +26,8 @@ class SubController(
         @RequestParam target: Target,
         @RequestParam name: String,
         @RequestParam url: String,
-        filter: String,
+        @RequestParam filter: String,
+        response: HttpServletResponse,
         model: Model
     ): String {
         val uri = UriComponentsBuilder.fromUriString(subConfig.apiUrl).path("/sub")
