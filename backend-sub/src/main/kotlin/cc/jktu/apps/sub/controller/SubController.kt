@@ -41,6 +41,7 @@ class SubController(
         model.addAllAttributes(
             mapOf(
                 "name" to name,
+                "url" to url,
                 "nodeListUrl" to nodeListUrl,
                 "filter" to filter
             )
