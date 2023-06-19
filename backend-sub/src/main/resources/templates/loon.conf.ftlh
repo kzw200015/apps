@@ -18,7 +18,7 @@ interface-mode = auto
 [Proxy]
 
 [Remote Proxy]
-${name} = <#noautoesc>${url}</#noautoesc>
+${name} = <#noautoesc>${nodeListUrl}</#noautoesc>
 
 [Proxy Group]
 节点选择 = select,常用

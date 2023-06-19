@@ -1,3 +1,5 @@
+subscribe-url: <#noautoesc>${url}</#noautoesc>
+
 port: 7890
 socks-port: 7891
 allow-lan: true
@@ -17,7 +19,7 @@ dns:
 proxy-providers:
   ${name}:
     type: http
-    url: <#noautoesc>${url}</#noautoesc>
+    url: <#noautoesc>${nodeListUrl}</#noautoesc>
     interval: 86400
     path: ./proxy-providers/${name}.yaml
 

@@ -30,7 +30,7 @@ class SubController(
         response: HttpServletResponse,
         model: Model
     ): String {
-        val uri = UriComponentsBuilder.fromUriString(subConfig.apiUrl).path("/sub")
+        val nodeListUrl = UriComponentsBuilder.fromUriString(subConfig.apiUrl).path("/sub")
             .queryParam("target", target.name.lowercase())
             .queryParam("url", URLEncoder.encode(url, Charsets.UTF_8))
             .queryParam("udp", "true")
@@ -41,7 +41,7 @@ class SubController(
         model.addAllAttributes(
             mapOf(
                 "name" to name,
-                "url" to uri,
+                "nodeListUrl" to nodeListUrl,
                 "filter" to filter
             )
         )
